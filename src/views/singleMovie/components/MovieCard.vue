@@ -2,12 +2,12 @@
 
 <template>
   <el-card style="margin-bottom:20px;">
-    <div slot="header" class="clearfix text-center">
-      <span>电影详情</span>
-    </div>
+    <!--    <div slot="header" class="clearfix text-center">-->
+    <!--      <span>电影详情</span>-->
+    <!--    </div>-->
 
     <!-- 电影海报以及文字介绍栏 -->
-    <el-row>
+    <el-row style="margin-top: 2%">
       <!-- 电影海报介绍栏 -->
       <el-col :span="12"> <el-image
         style="width: 200px; height: 300px; float: right; margin-right: 10%"
@@ -18,26 +18,26 @@
       <!-- 电影文字介绍栏 -->
       <el-col :span="12">
         <div>
-          <div class="movie-name">电影名称</div>
-          <div class="user-role text-muted">movie name</div>
+          <div class="movie-cname">{{ movie.chName }}</div>
+          <div class="movie-ename">{{ movie.enName }}</div>
           <!-- 评分 -->
           <el-rate
             v-model="value"
             disabled
             show-score
             text-color="#ff9900"
-            score-template="{value}"
+            :score-template="movie.rate"
           />
           <!-- 类型 -->
-          <div class="text-muted">类型：{{ 123 }}</div>
+          <div class="movie-info" style="margin-top: 2%">类型：{{ movie.mtype }}</div>
           <!-- 国家  -->
-          <div class="text-muted">国家：{{ 123 }}</div>
+          <div class="movie-info">国家：{{ movie.country }}</div>
           <!-- 日期 -->
-          <div class="text-muted">日期：{{ 123 }}</div>
+          <div class="movie-info">日期：{{ movie.date }}</div>
           <!-- 片长 -->
-          <div class="text-muted">片长：{{ 123 }}</div>
+          <div class="movie-info">片长：{{ movie.mlen }}</div>
           <!-- IMDb -->
-          <div class="text-muted">IMDb：{{ 123 }}</div>
+          <div class="movie-info">IMDb：{{ movie.IMDb }}</div>
 
         </div>
       </el-col>
@@ -46,10 +46,8 @@
     <div class="user-bio">
       <div class="user-education user-bio-section" style="margin-right: 6%; margin-left: 6%">
         <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>剧情简介</span></div>
-        <div class="user-bio-section-body">
-          <div class="text-muted">
-            影片改编自道迪·史密斯的小说，故事设定在20世纪70年代朋克摇滚革命时期的伦敦，讲述了一个名叫艾丝黛拉（艾玛·斯通 饰）的年轻骗子的故事。艾丝黛拉是一个聪明又有创意的女孩，她决心用自己的设计让自己出名。她和一对欣赏她的恶作剧嗜好的小偷交上了朋友，并能够一起在伦敦的街道上建立自己的生活。有一天，艾丝黛拉的时尚品味吸引了冯·赫尔曼男爵夫人（艾玛·汤普森 饰）的眼球，她是一位时尚界的传奇人物，拥有毁灭性的时尚和可怕的高雅，但他们的关系引发了一系列事件，导致艾丝黛拉去拥抱她的邪恶一面，成为了兼具疯狂、时尚和报复心的库伊拉。
-          </div>
+        <div class="movie-intro">
+          影片改编自道迪·史密斯的小说，故事设定在20世纪70年代朋克摇滚革命时期的伦敦，讲述了一个名叫艾丝黛拉（艾玛·斯通 饰）的年轻骗子的故事。艾丝黛拉是一个聪明又有创意的女孩，她决心用自己的设计让自己出名。她和一对欣赏她的恶作剧嗜好的小偷交上了朋友，并能够一起在伦敦的街道上建立自己的生活。有一天，艾丝黛拉的时尚品味吸引了冯·赫尔曼男爵夫人（艾玛·汤普森 饰）的眼球，她是一位时尚界的传奇人物，拥有毁灭性的时尚和可怕的高雅，但他们的关系引发了一系列事件，导致艾丝黛拉去拥抱她的邪恶一面，成为了兼具疯狂、时尚和报复心的库伊拉。
         </div>
       </div>
 
@@ -58,11 +56,12 @@
         <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>演职人员表</span></div>
         <div class="box-center">
           <el-row :gutter="24">
-            <el-col v-for="actor_pic in actor_pic_list" :key="actor_pic" :span="4" style="height: 40%;"><el-image
-                                                                                                          style="width: 100%; height: 100%;"
-                                                                                                          :src="actor_pic"
-                                                                                                          :preview-src-list="srcList"
-                                                                                                        />
+            <el-col v-for="actor_pic in actor_pic_list" :key="actor_pic" :span="4" style="height: 40%;">
+              <el-image
+                style="width: 100%; height: 100%;"
+                :src="actor_pic"
+                :preview-src-list="srcList"
+              />
               <p class="text-center">我是大导演</p>
             </el-col>
 
@@ -91,14 +90,18 @@
 
 export default {
   props: {
-    user: {
+    movie: {
       type: Object,
       default: () => {
         return {
-          name: '',
-          email: '',
-          avatar: '',
-          role: ''
+          chName: '',
+          enName: '',
+          mtype: '',
+          rate: '',
+          country: '',
+          date: '',
+          mlen: '',
+          IMDb: ''
         }
       }
     }
@@ -170,9 +173,31 @@ export default {
   color: #777;
 }
 
-.movie-name {
+.movie-cname {
   font-weight: bold;
   font-size: 30px;
+}
+
+.movie-ename {
+  margin-top: 1%;
+  margin-bottom: 1%;
+  font-weight: bold;
+  font-size: 24px;
+  color: #777;
+}
+
+.movie-info {
+  font-size: 20px;
+  line-height: 2;
+  color: #777;
+  text-align: justify; //两边对齐
+}
+
+.movie-intro {
+  font-size: 18px;
+  line-height: 2;
+  color: #777;
+  text-align: justify; //两边对齐
 }
 
 .user-profile {
