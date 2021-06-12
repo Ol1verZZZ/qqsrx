@@ -4,7 +4,19 @@
       <div class="post">
         <div class="user-block">
           <img class="img-circle" :src="'https://wpimg.wallstcn.com/57ed425a-c71e-4201-9428-68760c0537c4.jpg'+avatarPrefix">
-          <span class="username text-muted">Iron Man</span>
+          <span class="username text-muted" style="display: inline-block;margin-left: 10px">Iron Man</span>
+          <span class="username text-muted" style="display: inline-block;margin-left: 5px;">
+            <!-- 评分 -->
+            <el-rate
+              v-model="value"
+              disabled
+              show-score
+              text-color="#ff9900"
+              score-template=" "
+              style="alignment-baseline: center"
+            />
+          </span>
+
           <span class="description">Shared publicly - 7:30 PM today</span>
         </div>
         <p>
@@ -70,7 +82,8 @@ export default {
   data() {
     return {
       avatarPrefix,
-      carouselPrefix
+      carouselPrefix,
+      value: 4
     }
   }
 }
