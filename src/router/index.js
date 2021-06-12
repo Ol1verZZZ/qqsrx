@@ -86,6 +86,19 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
+    redirect: '/singlemovie',
+    children: [
+      {
+        path: 'singlemovie',
+        component: () => import('@/views/singleMovie/index'),
+        name: 'SingleMovie',
+        meta: { title: '电影详情', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
     redirect: '/dashboard',
     children: [
       {
