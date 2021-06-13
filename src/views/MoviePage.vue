@@ -1,45 +1,52 @@
+/* eslint-disable */
 <template>
   <div>
-<!--  ceshiyixia-->
+    <!--  ceshiyixia-->
     <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-success">
       <!-- Movie Cards -->
       <b-row>
         <b-col xl="2" md="6">
-          <movie-card title="Total traffic"
-                      image="http://www.yylp.xyz/movie_pic/1.jpg"
-                      class="mb-4">
-          </movie-card>
+          <movie-card
+            title="Total traffic"
+            image="http://www.yylp.xyz/movie_pic/1.jpg"
+            class="mb-4"
+          />
         </b-col>
         <b-col xl="2" md="6">
-          <movie-card title="Total traffic"
-                      image="http://www.yylp.xyz/movie_pic/2.jpg"
-                      class="mb-4">
-          </movie-card>
+          <movie-card
+            title="Total traffic"
+            image="http://www.yylp.xyz/movie_pic/2.jpg"
+            class="mb-4"
+          />
         </b-col>
         <b-col xl="2" md="6">
-          <movie-card title="Total traffic"
-                      image="http://www.yylp.xyz/movie_pic/3.jpg"
-                      class="mb-4">
-          </movie-card>
+          <movie-card
+            title="Total traffic"
+            image="http://www.yylp.xyz/movie_pic/3.jpg"
+            class="mb-4"
+          />
 
         </b-col>
         <b-col xl="2" md="6">
-          <movie-card title="Total traffic"
-                      image="http://www.yylp.xyz/movie_pic/4.jpg"
-                      class="mb-4">
-          </movie-card>
+          <movie-card
+            title="Total traffic"
+            image="http://www.yylp.xyz/movie_pic/4.jpg"
+            class="mb-4"
+          />
         </b-col>
         <b-col xl="2" md="6">
-          <movie-card title="Total traffic"
-                      image="http://www.yylp.xyz/movie_pic/5.jpg"
-                      class="mb-4">
-          </movie-card>
+          <movie-card
+            title="Total traffic"
+            image="http://www.yylp.xyz/movie_pic/5.jpg"
+            class="mb-4"
+          />
         </b-col>
         <b-col xl="2" md="6">
-          <movie-card title="Total traffic"
-                      image="http://www.yylp.xyz/movie_pic/6.jpg"
-                      class="mb-4">
-          </movie-card>
+          <movie-card
+            title="Total traffic"
+            image="http://www.yylp.xyz/movie_pic/6.jpg"
+            class="mb-4"
+          />
         </b-col>
       </b-row>
     </base-header>
@@ -49,7 +56,7 @@
       <b-row>
         <b-col xl="8" class="mb-5 mb-xl-0">
           <card type="default" header-classes="bg-transparent">
-            <b-row align-v="center" slot="header">
+            <b-row slot="header" align-v="center">
               <b-col>
                 <h6 class="text-light text-uppercase ls-1 mb-1">Overview</h6>
                 <h5 class="h3 text-white mb-0">Sales value</h5>
@@ -60,7 +67,8 @@
                     class="mr-2 mr-md-0"
                     :active="bigLineChart.activeIndex === 0"
                     link-classes="py-2 px-3"
-                    @click.prevent="initBigChart(0)">
+                    @click.prevent="initBigChart(0)"
+                  >
                     <span class="d-none d-md-block">Month</span>
                     <span class="d-md-none">M</span>
                   </b-nav-item>
@@ -76,18 +84,17 @@
               </b-col>
             </b-row>
             <line-chart
-              :height="350"
               ref="bigChart"
+              :height="350"
               :chart-data="bigLineChart.chartData"
               :extra-options="bigLineChart.extraOptions"
-            >
-            </line-chart>
+            />
           </card>
         </b-col>
 
         <b-col xl="4" class="mb-5 mb-xl-0">
           <card header-classes="bg-transparent">
-            <b-row align-v="center" slot="header">
+            <b-row slot="header" align-v="center">
               <b-col>
                 <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
                 <h5 class="h3 mb-0">Total orders</h5>
@@ -95,11 +102,10 @@
             </b-row>
 
             <bar-chart
-              :height="350"
               ref="barChart"
+              :height="350"
               :chart-data="redBarChart.chartData"
-            >
-            </bar-chart>
+            />
           </card>
         </b-col>
       </b-row>
@@ -108,10 +114,10 @@
       <!--Tables-->
       <b-row class="mt-5">
         <b-col xl="8" class="mb-5 mb-xl-0">
-          <page-visits-table></page-visits-table>
+          <page-visits-table />
         </b-col>
         <b-col xl="4" class="mb-5 mb-xl-0">
-          <social-traffic-table></social-traffic-table>
+          <social-traffic-table />
         </b-col>
       </b-row>
       <!--End tables-->
@@ -121,80 +127,48 @@
 </template>
 
 <script>
-  // Charts
-  import * as chartConfigs from '@/components/Charts/config';
-  import LineChart from '@/components/Charts/LineChart';
-  import BarChart from '@/components/Charts/BarChart';
+// Charts
+// import * as chartConfigs from '@/components/Charts/config'
+import LineChart from '@/components/Charts/LineChart'
+// import BarChart from '@/components/Charts/BarChart'
 
-  // Components
-  import BaseProgress from '@/components/BaseProgress';
-  import StatsCard from '@/components/Cards/StatsCard';
-  import MovieCard from '@/components/Cards/MovieCard';
+// Components
+// import BaseProgress from '@/components/BaseProgress'
+// import StatsCard from '@/components/Cards/StatsCard'
+import MovieCard from '@/components/Cards/MovieCard'
 
-  // Tables
-  import SocialTrafficTable from './Dashboard/SocialTrafficTable';
-  import PageVisitsTable from './Dashboard/PageVisitsTable';
+// Tables
+import SocialTrafficTable from './Dashboard/SocialTrafficTable'
+import PageVisitsTable from './Dashboard/PageVisitsTable'
 
-  export default {
-    components: {
-      LineChart,
-      BarChart,
-      BaseProgress,
-      StatsCard,
-      MovieCard,
-      PageVisitsTable,
-      SocialTrafficTable
-    },
-    data() {
-      return {
-        bigLineChart: {
-          allData: [
-            [0, 20, 10, 30, 15, 40, 20, 60, 60],
-            [0, 20, 5, 25, 10, 30, 15, 40, 40]
-          ],
-          activeIndex: 0,
-          chartData: {
-            datasets: [
-              {
-                label: 'Performance',
-                data: [0, 20, 10, 30, 15, 40, 20, 60, 60],
-              }
-            ],
-            labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-          },
-          extraOptions: chartConfigs.blueChartOptions,
-        },
-        redBarChart: {
-          chartData: {
-            labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            datasets: [{
-              label: 'Sales',
-              data: [25, 20, 30, 22, 17, 29]
-            }]
-          },
-          extraOptions: chartConfigs.blueChartOptions
-        }
-      };
-    },
-    methods: {
-      initBigChart(index) {
-        let chartData = {
-          datasets: [
-            {
-              label: 'Performance',
-              data: this.bigLineChart.allData[index]
-            }
-          ],
-          labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        };
-        this.bigLineChart.chartData = chartData;
-        this.bigLineChart.activeIndex = index;
-      }
-    },
-    mounted() {
-      this.initBigChart(0);
+export default {
+  components: {
+    LineChart,
+    // BarChart,
+    MovieCard,
+    PageVisitsTable,
+    SocialTrafficTable
+  },
+  data() {
+    return {
+      hotmovlist: {}
     }
-  };
+  },
+  mounted() {
+    this.initBigChart(0)
+  },
+  methods: {
+    getHotMovList() {
+      this.hotmovlist = [
+        { imgsrc: 'http://www.yylp.xyz/movie_pic/1.jpg', chName: '黑白魔女库伊拉' },
+        { imgsrc: 'http://www.yylp.xyz/movie_pic/2.jpg', chName: '黑白魔女库伊拉' },
+        { imgsrc: 'http://www.yylp.xyz/movie_pic/3.jpg', chName: '黑白魔女库伊拉' },
+        { imgsrc: 'http://www.yylp.xyz/movie_pic/4.jpg', chName: '黑白魔女库伊拉' },
+        { imgsrc: 'http://www.yylp.xyz/movie_pic/5.jpg', chName: '黑白魔女库伊拉' }
+      ]
+    }
+  }
+}
 </script>
 
 <style>
