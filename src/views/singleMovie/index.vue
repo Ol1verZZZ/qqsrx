@@ -20,9 +20,10 @@
 import { mapGetters } from 'vuex'
 import MovieCard from './components/MovieCard'
 import ShortComCard from './components/ShortComCard'
+import { getMovie } from '@/api/movies'
 
 export default {
-  name: 'SingleMovie',
+  name: 'SingleMov',
   components: { MovieCard, ShortComCard },
   data() {
     return {
@@ -38,9 +39,15 @@ export default {
     ])
   },
   created() {
-    this.getMovie()
+    this.testgetMovie()
   },
   methods: {
+    async testgetMovie() {
+      this.listLoading = true
+      const { movie } = await getMovie(this.$route.params.IMDb)
+      this.movie = movie
+      this.listLoading = false
+    },
     getMovie() {
       this.movie = {
         chName: '黑白魔女库伊拉',
