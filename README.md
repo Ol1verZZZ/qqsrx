@@ -33,6 +33,7 @@
             "chName": "智取威虎山"
         }
     ],
+    "IMDb": "tt3228774",
     "code": 20000
 }
 ```
@@ -42,5 +43,6 @@
 | hotmovlist |  list  | 热映电影列表 |
 |   imgsrc   |  url   |   图片地址   |
 |   chName   | string |  电影中文名  |
+|    IMDb    | string |  电影标识符  |
 |    code    | 20000  |  状态正确码  |
 
