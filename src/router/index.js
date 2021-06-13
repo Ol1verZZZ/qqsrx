@@ -73,32 +73,6 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/movieboard',
-    children: [
-      {
-        path: 'movieboard',
-        component: () => import('@/views/movies/index'),
-        name: 'MovieBoard',
-        meta: { title: 'MovieBoard', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/singlemovie',
-    children: [
-      {
-        path: 'singlemovie',
-        component: () => import('@/views/singleMovie/index'),
-        name: 'SingleMovie',
-        meta: { title: '电影详情', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/',
-    component: Layout,
     redirect: '/dashboard',
     children: [
       {
@@ -118,6 +92,32 @@ export const constantRoutes = [
         component: () => import('@/views/documentation/index'),
         name: 'Documentation',
         meta: { title: 'Documentation', icon: 'documentation', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/movieboard',
+    component: Layout,
+    redirect: '/movieboard',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/movies/index'),
+        name: 'MovieBoard',
+        meta: { title: '电影', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/singlemovie',
+    component: Layout,
+    redirect: '/singlemovie/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/singleMovie/index'),
+        name: 'SingleMov',
+        meta: { title: '电影详情', icon: 'dashboard', affix: true }
       }
     ]
   },
