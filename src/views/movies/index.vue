@@ -1,20 +1,9 @@
 <template>
   <div class="dashboard-editor-container">
+
     <el-row :gutter="8">
-      <el-col :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 3}" style="margin-bottom:30px;margin-right:30px;">
-        <box-card image="http://www.yylp.xyz/movie_pic/1.jpg" />
-      </el-col>
-      <el-col :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 3}" style="margin-bottom:30px;margin-right:30px;">
-        <box-card image="http://www.yylp.xyz/movie_pic/1.jpg" />
-      </el-col>
-      <el-col :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 3}" style="margin-bottom:30px;margin-right:30px;">
-        <box-card image="http://www.yylp.xyz/movie_pic/1.jpg" />
-      </el-col>
-      <el-col :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 3}" style="margin-bottom:30px;margin-right:30px;">
-        <box-card image="http://www.yylp.xyz/movie_pic/1.jpg" />
-      </el-col>
-      <el-col :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 3}" style="margin-bottom:30px;margin-right:30px;">
-        <box-card image="http://www.yylp.xyz/movie_pic/1.jpg" />
+      <el-col v-for="item in hotmovlist" :key="item.imgsrc" :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 3}" style="margin-bottom:30px;margin-right:30px;">
+        <box-card :movie="item" />
       </el-col>
     </el-row>
   </div>
@@ -22,6 +11,7 @@
 
 <script>
 import BoxCard from './components/BoxCard'
+import { getHotMovList } from '@/api/movies'
 
 export default {
   name: 'MoviesBoard',
@@ -30,12 +20,18 @@ export default {
   },
   data() {
     return {
-      // lineChartData: lineChartData.newVisitis
+      hotmovlist: {}
     }
   },
+  created() {
+    this.getHotMovList()
+  },
   methods: {
-    handleSetLineChartData(type) {
-      // this.lineChartData = lineChartData[type]
+    async getHotMovList() {
+      this.listLoading = true
+      const { hotmovlist } = await getHotMovList()
+      this.hotmovlist = hotmovlist
+      this.listLoading = false
     }
   }
 }

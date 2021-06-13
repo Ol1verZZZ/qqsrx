@@ -1,11 +1,12 @@
 <template>
   <el-card class="box-card-component" style="margin-left:8px;">
     <div slot="header" class="box-card-header">
-      <img :src="image">
+      <img :src="movie.imgsrc">
     </div>
-    <div style="position:relative;">
-      <pan-thumb :image="avatar" class="panThumb" />
-      <mallki class-name="mallki-text" text="电影名称" />
+
+    <div style="position:relative;" @click="movieClick">
+      <!--      <pan-thumb :image="avatar" class="panThumb" />-->
+      <mallki class-name="mallki-text" :text="movie.chName" style="float: right" />
       <div style="padding-top:5px;" class="progress-item" />
     </div>
   </el-card>
@@ -13,11 +14,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import PanThumb from '@/components/PanThumb'
+// import PanThumb from '@/components/PanThumb'
 import Mallki from '@/components/TextHoverEffect/Mallki'
 
 export default {
-  components: { PanThumb, Mallki },
+  components: { Mallki },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -28,7 +29,11 @@ export default {
     }
   },
   props: {
-    image: String
+    movie: {
+      image: String,
+      chName: String,
+      IMDb: String
+    }
   },
   data() {
     return {
@@ -36,6 +41,17 @@ export default {
         article_count: 1024,
         pageviews_count: 1024
       }
+    }
+  },
+  methods: {
+    movieClick() { // 跳转到对应的电影介绍页面
+      console.log(this.movie.IMDb)
+      this.$router.replace({
+        path: '/singlemovie',
+        query: {
+          IMDb: this.movie.IMDb
+        }
+      })
     }
   },
   computed: {
@@ -71,9 +87,7 @@ export default {
     }
   }
   .mallki-text {
-    position: absolute;
-    top: 0px;
-    right: 0px;
+    position: center;
     font-size: 20px;
     font-weight: bold;
   }
