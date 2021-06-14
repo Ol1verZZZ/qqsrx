@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <el-card class="box-card-component" style="margin-left:8px;">
     <div slot="header" class="box-card-header">
@@ -6,7 +7,7 @@
 
     <div style="position:relative;" @click="movieClick">
       <!--      <pan-thumb :image="avatar" class="panThumb" />-->
-      <mallki class-name="mallki-text" :text="movie.chName" style="float: right" />
+      <mallki class-name="mallki-text text-center" :text="movie.chName" style="float: left;" />
       <div style="padding-top:5px;" class="progress-item" />
     </div>
   </el-card>
@@ -46,8 +47,8 @@ export default {
   methods: {
     movieClick() { // 跳转到对应的电影介绍页面
       console.log(this.movie.IMDb)
-      this.$router.replace({
-        path: '/singlemovie',
+      this.$router.push({
+        name: 'testm',
         query: {
           IMDb: this.movie.IMDb
         }
