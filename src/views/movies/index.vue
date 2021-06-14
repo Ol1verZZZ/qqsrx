@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div class="dashboard-editor-container">
 
@@ -24,7 +25,8 @@ export default {
     }
   },
   created() {
-    this.getHotMovList()
+    // this.getHotMovList()
+    this.getLocalHotMovList()
   },
   methods: {
     async getHotMovList() {
@@ -32,6 +34,21 @@ export default {
       const { hotmovlist } = await getHotMovList()
       this.hotmovlist = hotmovlist
       this.listLoading = false
+      console.log(hotmovlist)
+    },
+    getLocalHotMovList() {
+      this.hotmovlist = [
+        {
+          'imgsrc': 'http://www.yylp.xyz/movie_pic/1.jpg',
+          'chName': '黑白魔女库伊拉',
+          'IMDb': 'tt3228774'
+        },
+        {
+          'imgsrc': 'http://www.yylp.xyz/movie_pic/2.jpg',
+          'chName': '智取威虎山',
+          'IMDb': 'tt3228774'
+        }
+      ]
     }
   }
 }

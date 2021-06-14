@@ -4,7 +4,7 @@ import config from './config'
 export function getHotMovList(query) {
   return request({
     url: config.base + 'movies/gethotmovlist',
-    method: 'get',
+    method: 'GET',
     params: query
   })
 }
@@ -12,7 +12,7 @@ export function getHotMovList(query) {
 export function getMovie(IMDb) {
   return request({
     url: config.base + 'movies/getmovie',
-    method: 'get',
+    method: 'GET',
     params: IMDb
   })
 }

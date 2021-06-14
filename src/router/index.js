@@ -73,7 +73,8 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/movieboard',
+    hidden: true,
     children: [
       {
         path: 'dashboard',
@@ -98,7 +99,7 @@ export const constantRoutes = [
   {
     path: '/movieboard',
     component: Layout,
-    redirect: '/movieboard',
+    redirect: '/movieboard/index',
     children: [
       {
         path: 'index',
@@ -111,13 +112,39 @@ export const constantRoutes = [
   {
     path: '/singlemovie',
     component: Layout,
-    redirect: '/singlemovie/index',
+    // redirect: '/singlemovie/index',
     children: [
       {
         path: 'index',
+        name: 'testm',
         component: () => import('@/views/singleMovie/index'),
-        name: 'SingleMov',
         meta: { title: '电影详情', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/myinfo',
+    component: Layout,
+    redirect: '/myinfo/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/myInfo/index'),
+        name: 'myInfoName',
+        meta: { title: '我的信息', icon: 'user', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/activities',
+    component: Layout,
+    redirect: '/activities/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/activities/index'),
+        name: 'activitiesName',
+        meta: { title: '我的动态', icon: 'peoples', noCache: true }
       }
     ]
   },
@@ -138,7 +165,6 @@ export const constantRoutes = [
     path: '/profile',
     component: Layout,
     redirect: '/profile/index',
-    hidden: true,
     children: [
       {
         path: 'index',

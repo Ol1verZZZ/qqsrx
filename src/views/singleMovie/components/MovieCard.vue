@@ -73,7 +73,7 @@
       <div class="user-education user-bio-section" style="margin-right: 6%; margin-left: 6%">
         <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>相关图片</span></div>
 
-        <el-carousel :interval="4000" type="card" height="250px" style="">
+        <el-carousel :interval="4000" type="card" height="200px" style="">
           <el-carousel-item v-for="image in image_list" :key="image">
             <el-image :src="image" style="height: 100%" />
           </el-carousel-item>

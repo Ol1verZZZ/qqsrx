@@ -39,7 +39,9 @@ export default {
     ])
   },
   created() {
-    this.testgetMovie()
+    this.getMovie()
+    // this.testgetMovie()
+    console.log('route:' + this.$route.fullPath)
   },
   methods: {
     async testgetMovie() {

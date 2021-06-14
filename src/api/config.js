@@ -1,3 +1,3 @@
 export default {
-  base: 'http://localhost:9090/'
+  base: 'http://172.20.10.2:8080/'
 }
