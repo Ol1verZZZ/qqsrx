@@ -11,7 +11,7 @@
       <!-- 电影海报介绍栏 -->
       <el-col :span="12"> <el-image
         style="width: 200px; height: 300px; float: right; margin-right: 10%"
-        :src="url"
+        :src="movie.posterURL"
         :preview-src-list="srcList"
       />
       </el-col>
@@ -28,6 +28,7 @@
             text-color="#ff9900"
             :score-template="movie.rate"
           />
+
           <!-- 类型 -->
           <div class="movie-info" style="margin-top: 2%">类型：{{ movie.mtype }}</div>
           <!-- 国家  -->
@@ -40,6 +41,13 @@
           <div class="movie-info">IMDb：{{ movie.IMDb }}</div>
 
         </div>
+        <el-button v-if="movie.intention" size="mini" type="warning" @click="intentionClick">
+          想看
+        </el-button>
+        <el-button v-if="!movie.intention" size="mini" type="info" @click="intentionClick">
+          想看
+        </el-button>
+
       </el-col>
     </el-row>
 
@@ -56,25 +64,62 @@
         <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>演职人员表</span></div>
         <div class="box-center">
           <el-row :gutter="24">
-            <el-col v-for="actor_pic in actor_pic_list" :key="actor_pic" :span="4" style="height: 40%;">
+            <el-col v-for="actor_item in movie.actor_list" :key="actor_item.name" :span="4" style="height: 40%;" @click.native="actorClick(actor_item)">
               <el-image
                 style="width: 100%; height: 100%;"
-                :src="actor_pic"
-                :preview-src-list="srcList"
+                :src="actor_item.imgsrc"
               />
-              <p class="text-center">我是大导演</p>
+              <p class="text-center">{{ actor_item.chName }}</p>
             </el-col>
 
           </el-row>
         </div>
       </div>
 
+      <el-dialog title="演员信息" :visible.sync="dialogFormVisible">
+        <el-row>
+          <!-- 演员介绍栏 -->
+          <el-col :span="12"> <el-image
+            style="width: 200px; height: 280px; float: right; margin-right: 10%"
+            :src="display_actor_info.imgsrc"
+            :preview-src-list="[display_actor_info.imgsrc]"
+          />
+          </el-col>
+          <!-- 演员文字介绍栏 -->
+          <el-col :span="12">
+            <div class="movie-cname">{{ display_actor_info.chName }}</div>
+            <div class="movie-ename">{{ display_actor_info.enName }}</div>
+            <!-- 性别 -->
+            <div class="movie-info" style="margin-top: 2%">性别：{{ display_actor_info.gender }}</div>
+            <!-- 出生地  -->
+            <div class="movie-info">出生地：{{ display_actor_info.birthPlace }}</div>
+            <!-- 出生日期 -->
+            <div class="movie-info">出生日期：{{ display_actor_info.birthDate }}</div>
+            <!-- IMDb -->
+            <div class="movie-info" style="margin-bottom: 20px">IMDb：{{ display_actor_info.IMDb }}</div>
+          </el-col>
+        </el-row>
+        <div style="margin-left: 5%; margin-right: 5%; margin-top: 2%">
+          <div class="user-bio-section-header" style="margin-bottom: 20px"><svg-icon icon-class="education" /><span>剧情简介</span></div>
+          <div class="movie-intro" style="height: 150px; overflow-y:scroll">
+            影片改编自道迪·史密斯的小说，故事设定在20世纪70年代朋克摇滚革命时期的伦敦，讲述了一个名叫艾丝黛拉（艾玛·斯通 饰）的年轻骗子的故事。艾丝黛拉是一个聪明又有创意的女孩，她决心用自己的设计让自己出名。她和一对欣赏她的恶作剧嗜好的小偷交上了朋友，并能够一起在伦敦的街道上建立自己的生活。有一天，艾丝黛拉的时尚品味吸引了冯·赫尔曼男爵夫人（艾玛·汤普森 饰）的眼球，她是一位时尚界的传奇人物，拥有毁灭性的时尚和可怕的高雅，但他们的关系引发了一系列事件，导致艾丝黛拉去拥抱她的邪恶一面，成为了兼具疯狂、时尚和报复心的库伊拉。
+          </div>
+        </div>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">
+            Cancel
+          </el-button>
+          <el-button type="primary" @click="dialogFormVisible = false">
+            Confirm
+          </el-button>
+        </div>
+      </el-dialog>
+
       <!-- 相关图片 -->
       <div class="user-education user-bio-section" style="margin-right: 6%; margin-left: 6%">
         <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>相关图片</span></div>
-
         <el-carousel :interval="4000" type="card" height="200px" style="">
-          <el-carousel-item v-for="image in image_list" :key="image">
+          <el-carousel-item v-for="image in m_image_list" :key="image">
             <el-image :src="image" style="height: 100%" />
           </el-carousel-item>
         </el-carousel>
@@ -87,13 +132,15 @@
 </template>
 
 <script>
-
+import { addIntention, deleteIntention } from '@/api/movies'
+import { mapGetters } from 'vuex'
 export default {
   props: {
     movie: {
       type: Object,
       default: () => {
         return {
+          posterURL: '',
           chName: '',
           enName: '',
           mtype: '',
@@ -101,38 +148,67 @@ export default {
           country: '',
           date: '',
           mlen: '',
-          IMDb: ''
+          IMDb: '',
+          intention: false,
+          actor_list: []
         }
       }
     }
   },
   data() {
     return {
-      url: 'http://www.yylp.xyz/movie_pic/1.jpg',
+      dialogFormVisible: false,
       srcList: [
         'http://www.yylp.xyz/movie_pic/1.jpg',
         'http://www.yylp.xyz/movie_pic/2.jpg'
       ],
-      actor_pic_list: [
-        'http://www.yylp.xyz/actor_pic/1.jpg',
-        'http://www.yylp.xyz/actor_pic/2.jpg',
-        'http://www.yylp.xyz/actor_pic/3.jpg',
-        'http://www.yylp.xyz/actor_pic/4.jpg',
-        'http://www.yylp.xyz/actor_pic/5.jpg',
-        'http://www.yylp.xyz/actor_pic/6.jpg'
-      ],
       value: 3.7,
       fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
       actor_url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-      image_list: [
+      m_image_list: [
         'http://www.yylp.xyz/pic_in_movie/1.jpg',
         'http://www.yylp.xyz/pic_in_movie/2.jpg',
         'http://www.yylp.xyz/pic_in_movie/3.jpg',
         'http://www.yylp.xyz/pic_in_movie/4.jpg',
         'http://www.yylp.xyz/pic_in_movie/5.jpg',
         'http://www.yylp.xyz/pic_in_movie/6.jpg'
-      ]
+      ],
+      display_actor_info: {
+        IMDb: '',
+        chName: '',
+        enName: '',
+        birthPlace: '',
+        birthDate: '',
+        gender: '',
+        imgsrc: ''
+      }
     }
+  },
+  methods: {
+    actorClick(actoritem) {
+      this.dialogFormVisible = true
+      this.display_actor_info = actoritem
+      console.log('点击了演员' + actoritem.chName)
+    },
+    intentionClick() {
+      const intn = this.movie.intention
+      if (intn) { // 已经标记过 点击是要删除想看
+        console.log('删除想看，userID=' + this.userID)
+        deleteIntention(this.userID, this.movie.IMDb)
+      } else { // 没有标记过 点击是要标记想看
+        console.log('标记想看，userID=' + this.userID)
+        addIntention(this.userID, this.movie.IMDb)
+      }
+      this.movie.intention = !intn
+      console.log('intention:' + this.movie.intention)
+      this.$forceUpdate()
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'name',
+      'userID'
+    ])
   }
 }
 </script>
@@ -188,7 +264,7 @@ export default {
 
 .movie-info {
   font-size: 20px;
-  line-height: 2;
+  line-height: 1.8;
   color: #777;
   text-align: justify; //两边对齐
 }

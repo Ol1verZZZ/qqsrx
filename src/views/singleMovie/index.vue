@@ -52,6 +52,7 @@ export default {
     },
     getMovie() {
       this.movie = {
+        posterURL: 'http://www.yylp.xyz/movie_pic/1.jpg',
         chName: '黑白魔女库伊拉',
         enName: 'Cruella',
         mtype: '喜剧犯罪',
@@ -59,7 +60,15 @@ export default {
         country: '美国',
         date: '2021-06-06',
         mlen: '134',
-        IMDb: 'tt3228774'
+        IMDb: 'tt3228774',
+        actor_list: [
+          { IMDb: 'IMDb1', chName: '小明', enName: 'dirctor1', birthPlace: 'birthPlace1', birthDate: '1988-11-06', gender: '男', imgsrc: 'http://www.yylp.xyz/actor_pic/1.jpg' },
+          { IMDb: 'IMDb2', chName: '小明', enName: 'actor2', birthPlace: 'birthPlace1', birthDate: '1988-11-06', gender: '男', imgsrc: 'http://www.yylp.xyz/actor_pic/2.jpg' },
+          { IMDb: 'IMDb3', chName: '小明', enName: 'actor3', birthPlace: 'birthPlace1', birthDate: '1988-11-06', gender: '男', imgsrc: 'http://www.yylp.xyz/actor_pic/3.jpg' },
+          { IMDb: 'IMDb4', chName: '小明', enName: 'actor4', birthPlace: 'birthPlace1', birthDate: '1988-11-06', gender: '男', imgsrc: 'http://www.yylp.xyz/actor_pic/4.jpg' },
+          { IMDb: 'IMDb5', chName: '小明', enName: 'actor5', birthPlace: 'birthPlace1', birthDate: '1988-11-06', gender: '男', imgsrc: 'http://www.yylp.xyz/actor_pic/5.jpg' },
+          { IMDb: 'IMDb6', chName: '小明', enName: 'actor6', birthPlace: 'birthPlace1', birthDate: '1988-11-06', gender: '男', imgsrc: 'http://www.yylp.xyz/actor_pic/6.jpg' }
+        ]
       }
     }
   }

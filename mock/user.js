@@ -10,12 +10,14 @@ const tokens = {
 
 const users = {
   'admin-token': {
+    userID: '00001',
     roles: ['admin'],
     introduction: 'I am a super administrator',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'Super Admin'
   },
   'editor-token': {
+    userID: '00002',
     roles: ['editor'],
     introduction: 'I am an editor',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
@@ -31,7 +33,7 @@ module.exports = [
     response: config => {
       const { username } = config.body
       const token = tokens[username]
-
+      const userID = '000001'
       // mock error
       if (!token) {
         return {
@@ -42,7 +44,8 @@ module.exports = [
 
       return {
         code: 20000,
-        data: token
+        data: token,
+        userID: userID
       }
     }
   },

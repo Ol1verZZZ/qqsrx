@@ -9,6 +9,9 @@
 
         <el-col :span="18" :xs="24">
           <el-card>
+            <div slot="header" class="clearfix">
+              <span>编辑信息</span>
+            </div>
             <account :user="user" />
           </el-card>
         </el-col>
@@ -48,7 +51,9 @@ export default {
         name: this.name,
         role: this.roles.join(' | '),
         email: 'admin@test.com',
-        avatar: this.avatar
+        avatar: this.avatar,
+        gender: '男',
+        rigDate: '2020-01-02'
       }
     }
   }

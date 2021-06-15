@@ -1,3 +1,4 @@
+/* eslint-disable */
 //模拟评论数据
 const comment = {
   status: "成功",

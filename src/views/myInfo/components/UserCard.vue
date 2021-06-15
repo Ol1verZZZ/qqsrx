@@ -13,7 +13,8 @@
       </div>
       <div class="box-center">
         <div class="user-name text-center">{{ user.name }}</div>
-        <div class="user-role text-center text-muted">{{ user.role }}</div>
+        <div class="user-role text-center text-muted">{{ user.gender }}</div>
+        <div class="user-role text-center text-muted">注册：{{ user.rigDate }}</div>
       </div>
     </div>
 
@@ -65,7 +66,10 @@ export default {
           name: '',
           email: '',
           avatar: '',
-          role: ''
+          role: '',
+          gender: '男',
+          rigDate: '2020-01-02'
+
         }
       }
     }

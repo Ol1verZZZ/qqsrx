@@ -16,3 +16,22 @@ export function getMovie(IMDb) {
     params: IMDb
   })
 }
+
+// 标记想看
+export function addIntention(userId, IMDb) {
+  return request({
+    url: config.base + 'intention',
+    method: 'POST',
+    params: userId, IMDb
+  })
+}
+
+// 删除想看
+export function deleteIntention(userId, IMDb) {
+  return request({
+    url: config.base + 'intention/delete',
+    method: 'DELETE',
+    params: userId, IMDb
+  })
+}
+
