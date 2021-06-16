@@ -28,7 +28,7 @@
 <script>
 
 import Vue from 'vue'
-import { addLikeShortComment } from '@/api/movies'
+import { addLikeShortComment, checkLike } from '@/api/movies'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -53,11 +53,17 @@ export default {
   },
   created() {
     console.log(this.comments)
+    for (const i in this.comments) {
+      i.isLike = this.checklike(i.userId)
+    }
   },
   methods: {
-    /**
-       * 点赞
-       */
+    async checklike(userId) {
+      this.listLoading = true
+      const { hasLiked } = await checkLike(userId, this.movie.IMDb, this.userID)
+      this.listLoading = false
+      return hasLiked
+    },
     likeClick(item) {
       if (item.isLike === null) {
         Vue.$set(item, 'isLike', true)

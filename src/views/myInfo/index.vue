@@ -14,7 +14,7 @@
                 <intention-mov-card :movies="movies" />
               </el-tab-pane>
               <el-tab-pane label="我的看过" name="timeline">
-                <watched-mov-card :movies="movies" />
+                <watched-mov-card :movies="short_reviews" />
               </el-tab-pane>
               <el-tab-pane label="个人信息" name="account">
                 <div slot="header" class="clearfix">
@@ -23,9 +23,6 @@
                 <account :user="user" />
               </el-tab-pane>
             </el-tabs>
-
-            <!--            <record-card :movies="movies" />-->
-
           </el-card>
         </el-col>
 
@@ -40,6 +37,8 @@ import UserCard from './components/UserCard'
 import Account from './components/Account'
 import intentionMovCard from './components/intentionMovCard'
 import watchedMovCard from './components/watchedMovCard'
+import { getIntentionList, getWatchedList } from '@/api/movies'
+// import { getShortComment, getIntentionList } from "@/api/movies";
 
 export default {
   name: 'MyInfo',
@@ -48,20 +47,36 @@ export default {
     return {
       user: {},
       activeTab: 'activity',
-      movies: []
+      movies: [],
+      short_reviews: []
     }
   },
   computed: {
     ...mapGetters([
       'name',
       'avatar',
-      'roles'
+      'roles',
+      'userID'
     ])
   },
   created() {
+    this.getIntentionMovList()
+    this.getWatchedMovList()
     this.getUser()
   },
   methods: {
+    async getIntentionMovList() {
+      this.listLoading = true
+      const { intentions } = await getIntentionList(this.userID)
+      this.movies = intentions
+      this.listLoading = false
+    },
+    async getWatchedMovList() {
+      this.listLoading = true
+      const { shortReviews } = await getWatchedList(this.userID)
+      this.short_reviews = shortReviews
+      this.listLoading = false
+    },
     getUser() {
       this.user = {
         name: this.name,
@@ -71,31 +86,6 @@ export default {
         gender: '男',
         rigDate: '2020-01-02'
       }
-      this.movies = [
-        {
-          posterURL: 'http://www.yylp.xyz/movie_pic/1.jpg',
-          chName: '黑白魔女库伊拉',
-          enName: 'Cruella',
-          mtype: '喜剧犯罪',
-          rate: '6.9',
-          country: '美国',
-          date: '2021-06-06',
-          mlen: '134',
-          IMDb: 'tt3228774'
-        },
-        {
-          posterURL: 'http://www.yylp.xyz/movie_pic/1.jpg',
-          chName: '黑白魔女库伊拉',
-          enName: 'Cruella',
-          mtype: '喜剧犯罪',
-          rate: '6.9',
-          country: '美国',
-          date: '2021-06-06',
-          mlen: '134',
-          IMDb: 'tt3228773'
-        }
-
-      ]
     }
   }
 }
