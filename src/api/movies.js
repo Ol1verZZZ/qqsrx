@@ -5,7 +5,7 @@ export function getHotMovList(query) {
   return request({
     url: config.base + 'movies/gethotmovlist',
     method: 'GET',
-    params: query
+    params: { query }
   })
 }
 
@@ -13,7 +13,7 @@ export function getMovie(IMDb) {
   return request({
     url: config.base + 'movies/getmovie',
     method: 'GET',
-    params: IMDb
+    params: { IMDb }
   })
 }
 
@@ -57,5 +57,13 @@ export function addLikeShortComment(ownerId, IMDb, userId) {
     url: config.base + 'srlike',
     method: 'POST',
     params: { ownerId, IMDb, userId }
+  })
+}
+
+export function getArtistInfo(IMDb) {
+  return request({
+    url: config.base + 'artists/getartist',
+    method: 'GET',
+    params: { IMDb }
   })
 }

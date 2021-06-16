@@ -42,8 +42,8 @@ export default {
     ])
   },
   created() {
-    this.getMovie()
-    // this.testgetMovie()
+    // this.getMovie()
+    this.testgetMovie()
     console.log('route:' + this.$route.fullPath)
     // 本地获取短评
     // this.commentData = CommentData.comment.data

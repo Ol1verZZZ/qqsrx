@@ -54,7 +54,7 @@
       <div class="user-education user-bio-section" style="margin-right: 6%; margin-left: 6%">
         <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>剧情简介</span></div>
         <div class="movie-intro">
-          影片改编自道迪·史密斯的小说，故事设定在20世纪70年代朋克摇滚革命时期的伦敦，讲述了一个名叫艾丝黛拉（艾玛·斯通 饰）的年轻骗子的故事。艾丝黛拉是一个聪明又有创意的女孩，她决心用自己的设计让自己出名。她和一对欣赏她的恶作剧嗜好的小偷交上了朋友，并能够一起在伦敦的街道上建立自己的生活。有一天，艾丝黛拉的时尚品味吸引了冯·赫尔曼男爵夫人（艾玛·汤普森 饰）的眼球，她是一位时尚界的传奇人物，拥有毁灭性的时尚和可怕的高雅，但他们的关系引发了一系列事件，导致艾丝黛拉去拥抱她的邪恶一面，成为了兼具疯狂、时尚和报复心的库伊拉。
+          {{ movie.intro }}
         </div>
       </div>
 
@@ -63,7 +63,7 @@
         <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>演职人员表</span></div>
         <div class="box-center">
           <el-row :gutter="24">
-            <el-col v-for="actor_item in movie.actor_list" :key="actor_item.name" :span="4" style="height: 40%;" @click.native="actorClick(actor_item)">
+            <el-col v-for="actor_item in movie.actor_list" :key="actor_item.name" :span="4" style="height: 40%;" @click.native="actorClick(actor_item.IMDb)">
               <el-image
                 style="width: 100%; height: 100%;"
                 :src="actor_item.imgsrc"
@@ -119,7 +119,7 @@
         <div style="margin-left: 5%; margin-right: 5%; margin-top: 2%">
           <div class="user-bio-section-header" style="margin-bottom: 20px"><svg-icon icon-class="education" /><span>人员简介</span></div>
           <div class="movie-intro" style="height: 150px; overflow-y:scroll">
-            影片改编自道迪·史密斯的小说，故事设定在20世纪70年代朋克摇滚革命时期的伦敦，讲述了一个名叫艾丝黛拉（艾玛·斯通 饰）的年轻骗子的故事。艾丝黛拉是一个聪明又有创意的女孩，她决心用自己的设计让自己出名。她和一对欣赏她的恶作剧嗜好的小偷交上了朋友，并能够一起在伦敦的街道上建立自己的生活。有一天，艾丝黛拉的时尚品味吸引了冯·赫尔曼男爵夫人（艾玛·汤普森 饰）的眼球，她是一位时尚界的传奇人物，拥有毁灭性的时尚和可怕的高雅，但他们的关系引发了一系列事件，导致艾丝黛拉去拥抱她的邪恶一面，成为了兼具疯狂、时尚和报复心的库伊拉。
+            {{ display_actor_info.intro }}
           </div>
         </div>
         <div slot="footer" class="dialog-footer">
@@ -170,7 +170,7 @@
 import { addIntention, deleteIntention } from '@/api/movies'
 import { mapGetters } from 'vuex'
 import ElImageViewer from 'element-ui/packages/image/src/image-viewer'
-import { addWatched } from '@/api/movies'
+import { addWatched, getArtistInfo } from '@/api/movies'
 // import * as CommentData from "../../../../mock/comments"
 
 export default {
@@ -243,10 +243,13 @@ export default {
     closeViewer() {
       this.showViewer = false
     },
-    actorClick(actoritem) {
+    async actorClick(IMDb) {
+      console.log('点击了演员' + IMDb)
+      this.listLoading = true
+      const { artist } = await getArtistInfo(IMDb)
+      this.display_actor_info = artist
+      this.listLoading = false
       this.dialogFormVisible = true
-      this.display_actor_info = actoritem
-      console.log('点击了演员' + actoritem.chName)
     },
     intentionClick() {
       const intn = this.movie.intention
