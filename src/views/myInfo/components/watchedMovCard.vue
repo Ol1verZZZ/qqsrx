@@ -2,7 +2,7 @@
 <template>
   <div style="margin-bottom:20px;">
     <!-- 电影海报以及文字介绍栏 -->
-    <el-row v-for="item in movies" :key="item.IMDb" style="margin-top: 2%">
+    <el-row v-for="item in this.movies" :key="item.IMDb" style="margin-top: 2%">
       <!-- 电影海报介绍栏 -->
       <el-col :span="4"> <el-image
         style="width: 80%;  margin-right: 1%"
@@ -72,7 +72,6 @@ export default {
   },
   computed: {},
   created() {
-    console.log(this.comments)
   },
   methods: {
     handleDelete(IMDb) {
