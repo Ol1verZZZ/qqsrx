@@ -2,7 +2,7 @@
 
 <template>
   <el-card style="margin-bottom:20px;">
-    <p>用户ID：{{ this.userID }}</p>
+    <p>用户ID：{{ userID }}</p>
     <!-- 电影海报以及文字介绍栏 -->
     <el-row style="margin-top: 2%">
       <!-- 电影海报介绍栏 -->
@@ -33,17 +33,17 @@
           <div class="movie-info">IMDb：{{ movie.IMDb }}</div>
 
         </div>
-        <el-button v-if="movie.intention" size="mini" type="warning" @click="intentionClick">
+        <el-button v-if="hasIntention" size="mini" type="warning" @click="intentionClick">
           想看
         </el-button>
-        <el-button v-if="!movie.intention" size="mini" type="info" @click="intentionClick">
+        <el-button v-if="!hasIntention" size="mini" type="info" @click="intentionClick">
           想看
         </el-button>
 
-        <el-button v-if="movie.watched" size="mini" type="warning" @click="watchedClick">
+        <el-button v-if="hasWatched" size="mini" type="warning" @click="watchedClick">
           看过
         </el-button>
-        <el-button v-if="!movie.watched" size="mini" type="info" @click="watchedClick">
+        <el-button v-if="!hasWatched" size="mini" type="info" @click="watchedClick">
           看过
         </el-button>
       </el-col>
@@ -170,7 +170,7 @@
 import { addIntention, deleteIntention } from '@/api/movies'
 import { mapGetters } from 'vuex'
 import ElImageViewer from 'element-ui/packages/image/src/image-viewer'
-import { addWatched, getArtistInfo } from '@/api/movies'
+import { addWatched, getArtistInfo, checkIntention, checkWatched } from '@/api/movies'
 // import * as CommentData from "../../../../mock/comments"
 
 export default {
@@ -223,10 +223,30 @@ export default {
         birthDate: '',
         gender: '',
         imgsrc: ''
-      }
+      },
+      hasIntention: false,
+      hasWatched: false
     }
   },
+  created() {
+    this.checkintention()
+    this.checkWatched()
+  },
   methods: {
+    async checkintention() {
+      this.listLoading = true
+      const { hasIntention } = await checkIntention(this.movie.IMDb, this.userID)
+      this.hasIntention = hasIntention
+      console.log(hasIntention)
+      this.listLoading = false
+    },
+    async checkwatched() {
+      this.listLoading = true
+      const { hasWatched } = await checkWatched(this.movie.IMDb, this.userID)
+      this.hasWatched = hasWatched
+      console.log(hasWatched)
+      this.listLoading = false
+    },
     async push_m_comment() { // 标记看过时提交短评
       console.log('用户ID：' + this.userID)
       console.log('提交评论：' + this.my_comment + '评分：' + this.my_value)

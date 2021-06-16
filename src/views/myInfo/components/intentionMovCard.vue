@@ -48,6 +48,7 @@
 <script>
 
 import Vue from 'vue'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {},
@@ -79,9 +80,12 @@ export default {
       ]
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters([
+      'userID'
+    ])
+  },
   created() {
-    console.log(this.comments)
   },
   methods: {
     handleDelete(IMDb) {
