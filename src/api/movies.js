@@ -48,6 +48,14 @@ export function getShortComment(IMDb) {
   return request({
     url: config.base + 'shortreview/getsrbyIMDb',
     method: 'GET',
-    params: IMDb
+    params: { IMDb }
+  })
+}
+
+export function addLikeShortComment(ownerId, IMDb, userId) {
+  return request({
+    url: config.base + 'srlike',
+    method: 'POST',
+    params: { ownerId, IMDb, userId }
   })
 }

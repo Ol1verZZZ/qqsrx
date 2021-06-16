@@ -1,4 +1,4 @@
-/* eslint-disable */
+
 <template>
   <el-card class="box-card-component" style="margin-left:8px;">
     <div slot="header" class="box-card-header">
@@ -7,14 +7,13 @@
 
     <div style="position:relative;" @click="movieClick">
       <!--      <pan-thumb :image="avatar" class="panThumb" />-->
-      <mallki class-name="mallki-text text-center" :text="movie.chName" style="float: left;" />
+      <mallki class-name="mallki-text" :text="movie.chName" style="float: left;" />
       <div style="padding-top:5px;" class="progress-item" />
     </div>
   </el-card>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 // import PanThumb from '@/components/PanThumb'
 import Mallki from '@/components/TextHoverEffect/Mallki'
 
@@ -31,9 +30,9 @@ export default {
   },
   props: {
     movie: {
-      image: String,
-      chName: String,
-      IMDb: String
+      image: '',
+      chName: '',
+      IMDb: ''
     }
   },
   data() {
@@ -54,13 +53,6 @@ export default {
         }
       })
     }
-  },
-  computed: {
-    ...mapGetters([
-      'name',
-      'avatar',
-      'roles'
-    ])
   }
 }
 </script>
@@ -74,12 +66,14 @@ export default {
 </style>
 <style lang="scss" scoped>
 .box-card-component {
+  width: 110%;
   .box-card-header {
     position: relative;
-    height: 220px;
+
+    /*height: 220px;*/
     img {
-      width: 100%;
-      height: 100%;
+      width: 99%;
+      /*height: 100%;*/
       transition: all 0.2s linear;
       &:hover {
         transform: scale(1.1, 1.1);
@@ -88,8 +82,8 @@ export default {
     }
   }
   .mallki-text {
-    position: center;
-    font-size: 20px;
+    /*position: center;*/
+    font-size: 18px;
     font-weight: bold;
   }
   .panThumb {
@@ -111,10 +105,6 @@ export default {
     margin-bottom: 10px;
     font-size: 14px;
   }
-  @media only screen and (max-width: 1510px){
-    .mallki-text{
-      display: none;
-    }
-  }
+
 }
 </style>
