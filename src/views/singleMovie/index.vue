@@ -8,7 +8,7 @@
         </el-col>
 
         <el-col :span="12" :xs="24">
-          <short-com-card />
+          <comment :comments="commentData" />
         </el-col>
 
       </el-row>
@@ -19,16 +19,19 @@
 <script>
 import { mapGetters } from 'vuex'
 import MovieCard from './components/MovieCard'
-import ShortComCard from './components/ShortComCard'
+// import ShortComCard from './components/ShortComCard'
 import { getMovie } from '@/api/movies'
+import * as CommentData from '../../../mock/comments'
+import comment from './components/comment'
 
 export default {
   name: 'SingleMov',
-  components: { MovieCard, ShortComCard },
+  components: { MovieCard, comment },
   data() {
     return {
       movie: {},
-      activeTab: 'activity'
+      activeTab: 'activity',
+      commentData: []
     }
   },
   computed: {
@@ -42,6 +45,7 @@ export default {
     this.getMovie()
     // this.testgetMovie()
     console.log('route:' + this.$route.fullPath)
+    this.commentData = CommentData.comment.data
   },
   methods: {
     async testgetMovie() {
