@@ -2,23 +2,23 @@
 <template>
   <el-card style="margin-bottom:20px;">
     <div class="container">
-      <div v-for="item in comments" :key="item.name" class="comment">
+      <div v-for="item in comments" :key="item.userId" class="comment">
         <!--头像、昵称、时间-->
         <div class="info">
-          <img class="avatar" :src="item.fromAvatar" width="36" height="36">
+          <img class="avatar" :src="item.imgsrc" width="36" height="36">
           <div class="right">
-            <div class="name">{{ item.fromName }}
+            <div class="name">{{ item.username }}
               <!--点赞-->
               <span class="like" :class="{active: item.isLike}" @click="likeClick(item)">
                 <i class="iconfont icon-like" />
-                <span class="like-num">{{ item.likeNum > 0 ? item.likeNum + '人赞' : '赞' }}</span>
+                <span class="like-num">{{ item.srLikeSum > 0 ? item.srLikeSum + '人赞' : '赞' }}</span>
               </span>
             </div>
-            <div class="date">{{ item.date }}</div>
+            <div class="date">{{ item.postTime }}</div>
           </div>
         </div>
         <!--短评内容-->
-        <div class="content">{{ item.content }}</div>
+        <div class="content">{{ item.srContent }}</div>
 
       </div>
     </div>
@@ -28,6 +28,8 @@
 <script>
 
 import Vue from 'vue'
+import { addLikeShortComment } from '@/api/movies'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {},
@@ -35,7 +37,8 @@ export default {
     comments: {
       type: Array,
       required: true
-    }
+    },
+    IMDb: String
   },
   data() {
     return {
@@ -43,7 +46,11 @@ export default {
       showItemId: ''
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters([
+      'userID'
+    ])
+  },
   created() {
     console.log(this.comments)
   },
@@ -54,12 +61,14 @@ export default {
     likeClick(item) {
       if (item.isLike === null) {
         Vue.$set(item, 'isLike', true)
-        item.likeNum++
+        item.srLikeSum++
       } else {
         if (item.isLike) {
-          item.likeNum--
+          item.srLikeSum--
         } else {
-          item.likeNum++
+          item.srLikeSum++
+          addLikeShortComment(item.userId, this.IMDb, this.userID)
+          console.log('点赞：' + item.userId + this.IMDb + this.userID)
         }
         item.isLike = !item.isLike
       }
