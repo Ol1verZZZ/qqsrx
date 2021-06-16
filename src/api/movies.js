@@ -67,3 +67,44 @@ export function getArtistInfo(IMDb) {
     params: { IMDb }
   })
 }
+
+export function getIntentionList(userId) {
+  return request({
+    url: config.base + 'intention/showuserintention',
+    method: 'GET',
+    params: { userId }
+  })
+}
+
+export function getWatchedList(userId) {
+  return request({
+    url: config.base + 'intention/showuserintention',
+    method: 'GET',
+    params: { userId }
+  })
+}
+
+export function checkLike(ownerId, IMDb, userId) {
+  return request({
+    url: config.base + 'srlike/hasliked',
+    method: 'GET',
+    params: { ownerId, IMDb, userId }
+  })
+}
+
+export function checkIntention(IMDb, userId) {
+  return request({
+    url: config.base + 'intention/hasintention',
+    method: 'GET',
+    params: { IMDb, userId }
+  })
+}
+
+export function checkWatched(IMDb, userId) {
+  return request({
+    url: config.base + 'haswatched',
+    method: 'GET',
+    params: { IMDb, userId }
+  })
+}
+
