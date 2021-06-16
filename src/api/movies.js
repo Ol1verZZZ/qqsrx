@@ -22,7 +22,7 @@ export function addIntention(userId, IMDb) {
   return request({
     url: config.base + 'intention',
     method: 'POST',
-    params: userId, IMDb
+    params: { userId, IMDb }
   })
 }
 
@@ -31,7 +31,23 @@ export function deleteIntention(userId, IMDb) {
   return request({
     url: config.base + 'intention/delete',
     method: 'DELETE',
-    params: userId, IMDb
+    params: { userId, IMDb }
   })
 }
 
+// 标记看过
+export function addWatched(userId, IMDb, rate, srContent) {
+  return request({
+    url: config.base + 'shortreview',
+    method: 'POST',
+    params: { userId, IMDb, rate, srContent }
+  })
+}
+
+export function getShortComment(IMDb) {
+  return request({
+    url: config.base + 'shortreview/getsrbyIMDb',
+    method: 'GET',
+    params: IMDb
+  })
+}

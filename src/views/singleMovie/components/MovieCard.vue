@@ -2,7 +2,7 @@
 
 <template>
   <el-card style="margin-bottom:20px;">
-
+    <p>用户ID：{{ this.userID }}</p>
     <!-- 电影海报以及文字介绍栏 -->
     <el-row style="margin-top: 2%">
       <!-- 电影海报介绍栏 -->
@@ -79,7 +79,7 @@
       <div class="user-education user-bio-section" style="margin-right: 6%; margin-left: 6%">
         <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>相关图片</span></div>
         <el-carousel :interval="4000" type="card" height="220px">
-          <el-carousel-item v-for="image in m_image_list" :key="image">
+          <el-carousel-item v-for="image in movie.img_list" :key="image">
             <el-image :src="image" style="height: 100%" />
           </el-carousel-item>
         </el-carousel>
@@ -88,7 +88,7 @@
       <el-image-viewer
         v-if="showViewer"
         :on-close="closeViewer"
-        :url-list="m_image_list"
+        :url-list="movie.img_list"
       />
 
       <el-button type="primary" @click="onPreview">查看图片</el-button>
@@ -133,7 +133,7 @@
       </el-dialog>
 
       <el-dialog
-        title="提示"
+        title="标记看过"
         :visible.sync="dialogVisible"
         width="30%"
       >
@@ -141,22 +141,22 @@
         <span class="username text-muted" style="display: inline-block;">
           <!-- 评分 -->
           <el-rate
-            v-model="value2"
+            v-model="my_value"
             :colors="colors"
             show-text
           />
         </span>
         <span class="username text-muted" style="display: block;margin-top: 5%">简短评论：</span>
         <el-input
-          v-model="textarea"
+          v-model="my_comment"
           type="textarea"
-          placeholder="请输入内容"
-          maxlength="30"
+          placeholder="请输入评价"
+          maxlength="50"
           show-word-limit
         />
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+          <el-button type="primary" @click="push_m_comment">确 定</el-button>
         </span>
       </el-dialog>
 
@@ -170,6 +170,8 @@
 import { addIntention, deleteIntention } from '@/api/movies'
 import { mapGetters } from 'vuex'
 import ElImageViewer from 'element-ui/packages/image/src/image-viewer'
+import { addWatched } from '@/api/movies'
+// import * as CommentData from "../../../../mock/comments"
 
 export default {
   components: {
@@ -191,7 +193,8 @@ export default {
           IMDb: '',
           intention: false,
           watched: false,
-          actor_list: []
+          actor_list: [],
+          img_list: []
         }
       }
     }
@@ -199,8 +202,8 @@ export default {
   data() {
     return {
       showViewer: false,
-      textarea: '',
-      value2: null,
+      my_comment: '',
+      my_value: null,
       colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
       dialogVisible: false,
       dialogFormVisible: false,
@@ -211,14 +214,7 @@ export default {
       value: 3.7,
       fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
       actor_url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-      m_image_list: [
-        'http://www.yylp.xyz/pic_in_movie/1.jpg',
-        'http://www.yylp.xyz/pic_in_movie/2.jpg',
-        'http://www.yylp.xyz/pic_in_movie/3.jpg',
-        'http://www.yylp.xyz/pic_in_movie/4.jpg',
-        'http://www.yylp.xyz/pic_in_movie/5.jpg',
-        'http://www.yylp.xyz/pic_in_movie/6.jpg'
-      ],
+
       display_actor_info: {
         IMDb: '',
         chName: '',
@@ -231,6 +227,15 @@ export default {
     }
   },
   methods: {
+    async push_m_comment() { // 标记看过时提交短评
+      console.log('用户ID：' + this.userID)
+      console.log('提交评论：' + this.my_comment + '评分：' + this.my_value)
+      this.listLoading = true
+      const { code } = await addWatched(this.userID, this.movie.IMDb, this.my_value, this.my_comment)
+      console.log(code)
+      this.listLoading = false
+      this.dialogVisible = false
+    },
     onPreview() {
       console.log('打开图片浏览器')
       this.showViewer = true
@@ -264,10 +269,8 @@ export default {
         // 弹出写短评的对话框
         this.dialogVisible = true
         console.log('标记看过，userID=' + this.userID)
-        // addWatched(this.userID, this.movie.IMDb)
         this.movie.watched = true
       }
-      console.log('intention:' + this.movie.intention)
       this.$forceUpdate()
     },
     getTime() {
