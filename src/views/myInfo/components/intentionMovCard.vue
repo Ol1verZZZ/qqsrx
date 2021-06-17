@@ -36,12 +36,6 @@
       </el-col>
 
     </el-row>
-    <!--    <JwChat-index-->
-    <!--      :taleList="taleList"-->
-    <!--      @enter="bindEnter"-->
-    <!--      v-model="inputMsg"-->
-    <!--      :toolConfig="tool"-->
-    <!--    />-->
   </div>
 </template>
 
@@ -61,23 +55,7 @@ export default {
   data() {
     return {
       inputComment: '',
-      showItemId: '',
-      taleList: [
-        {
-          date: '2020/04/25 21:19:07',
-          text: { 'text': '起床不[加油]' },
-          mine: false,
-          name: '只盼流星不盼雨',
-          img: 'image/two.jpeg'
-        },
-        {
-          date: '2020/04/16 21:19:07',
-          text: { 'text': '我不饿' },
-          mine: true,
-          name: '留恋人间不羡仙',
-          img: 'image/three.jpeg'
-        }
-      ]
+      showItemId: ''
     }
   },
   computed: {

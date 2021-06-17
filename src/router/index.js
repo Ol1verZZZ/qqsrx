@@ -70,32 +70,32 @@ export const constantRoutes = [
     component: () => import('@/views/error-page/401'),
     hidden: true
   },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/movieboard',
-    hidden: true,
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/documentation',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: 'Documentation', icon: 'documentation', affix: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/movieboard',
+  //   hidden: true,
+  //   children: [
+  //     {
+  //       path: 'dashboard',
+  //       component: () => import('@/views/dashboard/index'),
+  //       name: 'Dashboard',
+  //       meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/documentation',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/documentation/index'),
+  //       name: 'Documentation',
+  //       meta: { title: 'Documentation', icon: 'documentation', affix: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/movieboard',
     component: Layout,
@@ -145,6 +145,29 @@ export const constantRoutes = [
         component: () => import('@/views/activities/index'),
         name: 'activitiesName',
         meta: { title: '我的动态', icon: 'peoples', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/friends',
+    component: Layout,
+    redirect: '/friends/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/friends/index'),
+        name: 'friendsName',
+        meta: { title: '我的好友', icon: 'peoples', noCache: true }
+      }
+    ]
+  },
+  {
+    path: 'external-link',
+    component: Layout,
+    children: [
+      {
+        path: 'https://github.com/Ol1verZZZ/qqsrx',
+        meta: { title: '关于我们', icon: 'link' }
       }
     ]
   },

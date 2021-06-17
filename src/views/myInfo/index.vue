@@ -38,6 +38,7 @@ import Account from './components/Account'
 import intentionMovCard from './components/intentionMovCard'
 import watchedMovCard from './components/watchedMovCard'
 import { getIntentionList, getWatchedList } from '@/api/movies'
+import { movies_mock } from '@/../mock/movies.js'
 // import { getShortComment, getIntentionList } from "@/api/movies";
 
 export default {
@@ -61,7 +62,8 @@ export default {
   },
   created() {
     this.getIntentionMovList()
-    this.getWatchedMovList()
+    // this.getWatchedMovList()
+    this.short_reviews = movies_mock.shortReviews
     this.getUser()
   },
   methods: {
