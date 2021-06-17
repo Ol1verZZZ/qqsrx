@@ -19,7 +19,7 @@
               </el-col>
             </el-tab-pane>
             <el-tab-pane label="高分电影" name="second">
-              <el-col v-for="item in hotmovlist" :key="item.imgsrc" :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 4}" style="margin-bottom:30px;margin-right:3%;;">
+              <el-col v-for="item in goodmovlist" :key="item.imgsrc" :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 4}" style="margin-bottom:30px;margin-right:3%;;">
                 <box-card :movie="item" />
               </el-col>
             </el-tab-pane>
@@ -29,7 +29,7 @@
               </el-col>
             </el-tab-pane>
             <el-tab-pane label="国产好片" name="fourth">
-              <el-col v-for="item in hotmovlist" :key="item.imgsrc" :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 4}" style="margin-bottom:30px;margin-right:3%;;">
+              <el-col v-for="item in chinesemovlist" :key="item.imgsrc" :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 4}" style="margin-bottom:30px;margin-right:3%;;">
                 <box-card :movie="item" />
               </el-col>
             </el-tab-pane>
@@ -46,6 +46,7 @@
 <script>
 import BoxCard from './components/BoxCard'
 import { getHotMovList } from '@/api/movies'
+import { hot_movie_list_mock, good_movie_list_mock, chinese_movie_list_mock } from '@/../mock/movies'
 
 export default {
   name: 'MoviesBoard',
@@ -54,13 +55,19 @@ export default {
   },
   data() {
     return {
-      hotmovlist: {},
+      hotmovlist: [],
+      newmovlist: [],
+      goodmovlist: [],
+      coldmovlist: [],
+      chinesemovlist: [],
       default_tab: 'first'
     }
   },
   created() {
     // this.getHotMovList()
-    this.getLocalHotMovList()
+    this.hotmovlist = hot_movie_list_mock
+    this.goodmovlist = good_movie_list_mock
+    this.chinesemovlist = chinese_movie_list_mock
   },
   methods: {
     async getHotMovList() {
@@ -69,35 +76,6 @@ export default {
       this.hotmovlist = hotmovlist
       this.listLoading = false
       console.log(hotmovlist)
-    },
-    getLocalHotMovList() {
-      this.hotmovlist = [
-        {
-          'imgsrc': 'http://www.yylp.xyz/movie_pic/1.jpg',
-          'chName': '黑白魔女库伊拉',
-          'IMDb': 'tt3228774'
-        },
-        {
-          'imgsrc': 'http://www.yylp.xyz/movie_pic/2.jpg',
-          'chName': '智取威虎山',
-          'IMDb': 'tt3228774'
-        },
-        {
-          'imgsrc': 'http://www.yylp.xyz/movie_pic/2.jpg',
-          'chName': '智取威虎山',
-          'IMDb': 'tt3228774'
-        },
-        {
-          'imgsrc': 'http://www.yylp.xyz/movie_pic/2.jpg',
-          'chName': '智取威虎山',
-          'IMDb': 'tt3228774'
-        },
-        {
-          'imgsrc': 'http://www.yylp.xyz/movie_pic/2.jpg',
-          'chName': '智取威虎山',
-          'IMDb': 'tt3228774'
-        }
-      ]
     }
   }
 }
