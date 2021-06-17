@@ -2,7 +2,7 @@
 <template>
   <div style="margin-bottom:20px;">
     <!-- 电影海报以及文字介绍栏 -->
-    <el-row v-for="item in this.movies" :key="item.IMDb" style="margin-top: 2%">
+    <el-row v-for="item in this.movies" :key="item.IMDb" style="margin-top: 2%; height: 30%">
       <!-- 电影海报介绍栏 -->
       <el-col :span="4"> <el-image
         style="width: 80%;  margin-right: 1%"
@@ -24,11 +24,9 @@
             text-color="#ff9900"
             :score-template="item.rate"
           />
-
-          <div class="movie-info" style="margin-top: 2%;">类型：{{ item.mtype }}</div>
-          <div class="movie-info">国家：{{ item.country }}</div>
-          <div class="movie-info">日期：{{ item.date }}</div>
-          <div class="movie-info">片长：{{ item.mlen }}分钟</div>
+          <span style="display: block">{{ item.postTime }}</span>
+          <span style="display: block;">我的评论：</span>
+          <span style="display: block">{{ item.srContent }}</span>
           <el-button size="mini" type="danger" @click="handleDelete(item.IMDb)">
             删除记录
           </el-button>
@@ -51,23 +49,7 @@ export default {
   data() {
     return {
       inputComment: '',
-      showItemId: '',
-      taleList: [
-        {
-          date: '2020/04/25 21:19:07',
-          text: { 'text': '起床不[加油]' },
-          mine: false,
-          name: '只盼流星不盼雨',
-          img: 'image/two.jpeg'
-        },
-        {
-          date: '2020/04/16 21:19:07',
-          text: { 'text': '我不饿' },
-          mine: true,
-          name: '留恋人间不羡仙',
-          img: 'image/three.jpeg'
-        }
-      ]
+      showItemId: ''
     }
   },
   computed: {},
